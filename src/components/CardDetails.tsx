@@ -1,16 +1,16 @@
 import React from 'react'
 
 import { PokemonTCG } from 'pokemon-tcg-sdk-typescript'
-import { ICard } from '../interfaces/card'
+import { ICard } from 'interfaces/card'
 
-type Props = {
+type CardDetailsProps = {
     card: ICard
 }
 
 
-const CardDetails = ({ card }: Props) => {
+const CardDetails = ({ card }: CardDetailsProps) => {
   return (
-    <div key={card.id}>
+    <div>
         <p className='card-details'>{card.name}, {card.set?.name} {card.number}/{card.set?.total}</p> 
     </div>
   )

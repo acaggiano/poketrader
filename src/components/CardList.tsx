@@ -4,24 +4,19 @@ import { useState } from 'react';
 import CardDetails from './CardDetails';
 
 import { PokemonTCG } from 'pokemon-tcg-sdk-typescript'
-import { ICard } from '../interfaces/card';
+import { ICard } from 'interfaces/card';
 
-type Props = {
+type CardListProps = {
     cards: ICard[] | undefined
 }
 
-const CardList = ({cards}: Props) => {
+const CardList = ({cards}: CardListProps) => {
   return (
-    <div>
-      <div>
         <div>
-          {cards?.map(c => 
-              <CardDetails card={c} />
+          {(cards??[]).map((c: ICard, i: number) => 
+              <CardDetails  key={i} card={c} />
           )}
         </div>
-        
-      </div>
-    </div>
   )
 }
 

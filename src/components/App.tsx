@@ -8,14 +8,14 @@ import CardList from './CardList'
 import CardDetails from './CardDetails'
 import SearchResults from './SearchResults'
 import HoloType from './HoloType'
-import { ICard } from '../interfaces/card'
+import { ICard } from 'interfaces/card'
 
 
 
 
-type Props = {}
+type AppProps = {}
 
-const App = ({}: Props) => {
+const App = ({}: AppProps) => {
     
     const [searchInput, setSearchInput] = useState('')
     const [searchCards, setSearchCards] = useState<ICard[]>([])
@@ -27,14 +27,6 @@ const App = ({}: Props) => {
     function handleSearchChange(e: React.ChangeEvent) {
         let element = e.target as HTMLInputElement
         setSearchInput(element.value)
-    }
-
-    function handleAddCard(card: {}) {
-        console.log(card)
-        
-        const updateCards = [...selectedCards, card ]
-
-        setSelectedCards(updateCards)
     }
 
     const getCards = async (searchQuery: string) => {
@@ -54,7 +46,7 @@ const App = ({}: Props) => {
         <CardList cards={ selectedCards }/>
         <SearchBar query={ searchInput } onChange={ handleSearchChange }/>
         <button onClick={() => {  getCards(searchInput) }}>Search</button>
-        <SearchResults cards={ searchCards } onSubmit= { handleAddCard } />
+        <SearchResults cards={ searchCards } onSubmit= { (card: ICard) => { setSelectedCards(cards => [...cards, card]) } } />
     </div>
   )
 }

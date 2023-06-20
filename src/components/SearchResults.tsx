@@ -1,23 +1,23 @@
 import React, { useEffect } from 'react'
 import CardDetails from './CardDetails'
 import HoloType from './HoloType'
-import { ICard } from '../interfaces/card'
+import { ICard } from 'interfaces/card'
 
-type Props = {
+type SearchResultsProps = {
     cards: ICard[],
-    onSubmit: any
+    onSubmit: (card: ICard) => void
 }
 
-const SearchResults = ({ cards , onSubmit }: Props) => {
+const SearchResults = ({ cards , onSubmit }: SearchResultsProps) => {
     if (cards) {
         return (
             <div>
                 <h2>Search Results</h2>
                 <div>
-                {cards?.map(c => 
+                {(cards??[]).map(c => 
                     <div key={c.id}>
-                    <CardDetails card={c}/>
-                    <button onClick={ () => {onSubmit(c) }}>Add</button>
+                        <CardDetails card={c}/>
+                        <button onClick={ () => { onSubmit(c) }}>Add</button>
                     </div>
                 )}
                 </div>
@@ -26,7 +26,7 @@ const SearchResults = ({ cards , onSubmit }: Props) => {
         )
     }
 
-    else return <div></div>
+    else return null
 }
 
 export default SearchResults
