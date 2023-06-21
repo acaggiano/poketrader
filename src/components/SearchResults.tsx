@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import CardDetails from './CardDetails'
-import HoloType from './HoloType'
 import { ICard } from 'interfaces/card'
 
 type SearchResultsProps = {
     cards: ICard[],
-    onSubmit: (card: ICard) => void
+    onSubmit: (card: ICard, reversePrice: boolean) => void
 }
 
 const SearchResults = ({ cards , onSubmit }: SearchResultsProps) => {
+
     if (cards) {
         return (
             <div>
@@ -16,8 +16,9 @@ const SearchResults = ({ cards , onSubmit }: SearchResultsProps) => {
                 <div>
                 {(cards??[]).map(c => 
                     <div key={c.id}>
-                        <CardDetails card={c}/>
-                        <button onClick={ () => { onSubmit(c) }}>Add</button>
+                        <CardDetails card={c} includePrice={false} />
+                        <button onClick={ () => { onSubmit(c, false) }}>Add</button>
+                        {c.tcgplayer?.prices?.reverseHolofoil?.market ? (<button onClick={ () => { onSubmit(c, true) }}>Add Reverse</button>): null}
                     </div>
                 )}
                 </div>

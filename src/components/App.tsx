@@ -1,28 +1,19 @@
-import React, { useEffect } from 'react'
-import axios, { AxiosResponse } from 'axios'
+import React from 'react'
+import axios from 'axios'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 
 import SearchBar from './SearchBar'
 import CardList from './CardList'
-import CardDetails from './CardDetails'
 import SearchResults from './SearchResults'
-import HoloType from './HoloType'
 import { ICard } from 'interfaces/card'
 
 
-
-
-type AppProps = {}
-
-const App = ({}: AppProps) => {
+const App = () => {
     
     const [searchInput, setSearchInput] = useState('')
     const [searchCards, setSearchCards] = useState<ICard[]>([])
-    const [selectedCards, setSelectedCards] = useState<ICard[]>([])  
-    const [holoType, setHoloType] = useState('normal')
-    const [price, setPrice] = useState(0)
-    const [total, setTotal] = useState(0)
+    const [selectedCards, setSelectedCards] = useState<ICard[]>([]) 
 
     function handleSearchChange(e: React.ChangeEvent) {
         let element = e.target as HTMLInputElement
@@ -32,21 +23,32 @@ const App = ({}: AppProps) => {
     const getCards = async (searchQuery: string) => {
         try {
             const baseURL = 'https://api.pokemontcg.io/v2/cards?q=name:'
-            const results = await axios.get(baseURL + searchQuery)
-            setSearchCards(results.data.data)
+            const _results = (await axios.get(baseURL + searchQuery))
+            console.log(_results)
+            
+            const results: ICard[] = _results.data.data.map((c: ICard) => ({...c, price: c.tcgplayer?.prices?.normal?.market || c.tcgplayer?.prices?.holofoil?.market }))
+
+            setSearchCards(results)
         }
         catch (error) {
             console.log(error)
         }
     }
 
+    const sum  = useMemo(() => selectedCards.reduce((accumulator, currentValue) =>  accumulator + currentValue.price!, 0), [selectedCards]) 
 
+    
   return (
     <div className='App'>  
-        <CardList cards={ selectedCards }/>
+        <CardList cards={ selectedCards } />
+        <p>Total: ${(sum).toFixed(2)}</p>
         <SearchBar query={ searchInput } onChange={ handleSearchChange }/>
         <button onClick={() => {  getCards(searchInput) }}>Search</button>
-        <SearchResults cards={ searchCards } onSubmit= { (card: ICard) => { setSelectedCards(cards => [...cards, card]) } } />
+        <SearchResults cards={ searchCards } onSubmit= { (card: ICard, reversePrice: boolean) => { 
+
+            setSelectedCards(cards => [...cards, {...card, price: reversePrice?card.tcgplayer?.prices?.reverseHolofoil?.market:card.price}]) 
+
+        }} />
     </div>
   )
 }
