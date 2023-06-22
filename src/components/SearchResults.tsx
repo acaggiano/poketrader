@@ -4,12 +4,13 @@ import { ICard } from 'interfaces/card'
 
 type SearchResultsProps = {
     cards: ICard[],
+    error: any,
     onSubmit: (card: ICard, reversePrice: boolean) => void
 }
 
-const SearchResults = ({ cards , onSubmit }: SearchResultsProps) => {
+const SearchResults = ({ cards , onSubmit, error }: SearchResultsProps) => {
 
-    if (cards) {
+    if (cards.length > 0) {
         return (
             <div>
                 <h2>Search Results</h2>
@@ -27,6 +28,9 @@ const SearchResults = ({ cards , onSubmit }: SearchResultsProps) => {
         )
     }
 
+    else if (error) return <p>{error}</p>
+
+       
     else return null
 }
 

@@ -8,8 +8,6 @@ type CardListProps = {
     cards: ICard[] | undefined
 }
 
-
-
 const CardList = ({cards}: CardListProps) => {
   
   return (
