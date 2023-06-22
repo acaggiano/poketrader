@@ -18,7 +18,8 @@ const SearchResults = ({ cards , onSubmit, error }: SearchResultsProps) => {
                 {(cards??[]).map(c => 
                     <div key={c.id}>
                         <CardDetails card={c} includePrice={false} />
-                        <button onClick={ () => { onSubmit(c, false) }}>Add</button>
+                        {c.tcgplayer?.prices?.holofoil?.market || c.tcgplayer?.prices?.normal?.market ? (<button onClick={ () => { onSubmit(c, false) }}>Add</button>) : (<p>price not found</p>)}
+                        
                         {c.tcgplayer?.prices?.reverseHolofoil?.market ? (<button onClick={ () => { onSubmit(c, true) }}>Add Reverse</button>): null}
                     </div>
                 )}

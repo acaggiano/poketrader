@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 
 import CardDetails from './CardDetails'
 
@@ -9,6 +9,8 @@ type CardListProps = {
 }
 
 const CardList = ({cards}: CardListProps) => {
+
+  const sum  = useMemo(() => cards!.reduce((accumulator, currentValue) =>  accumulator + currentValue.price!, 0), [cards]) 
   
   return (
         <div>
@@ -17,6 +19,7 @@ const CardList = ({cards}: CardListProps) => {
               <CardDetails card={c} includePrice={true} />
             </div>
           )}
+          <p>Total: ${(sum).toFixed(2)}</p>
         </div>
   )
 }
