@@ -3,6 +3,7 @@ import React, { useMemo } from 'react'
 import CardDetails from './CardDetails'
 
 import { ICard } from 'interfaces/card'
+import getTotal from 'utils'
 
 type CardListProps = {
     cards: ICard[] | undefined
@@ -10,7 +11,7 @@ type CardListProps = {
 
 const CardList = ({cards}: CardListProps) => {
 
-  const sum  = useMemo(() => cards!.reduce((accumulator, currentValue) =>  accumulator + currentValue.price!, 0), [cards]) 
+  const sum  = useMemo(() => getTotal(cards!), [cards]) 
   
   return (
         <div>
