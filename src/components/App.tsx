@@ -13,6 +13,7 @@ import getTotal from 'utils'
 const App = () => {
 	
 	const [searchInput, setSearchInput] = useState('')
+	const [isLoading, setIsLoading] = useState(false)
 	const [searchCards, setSearchCards] = useState<ICard[]>([])
 	const [searchOpen, setSearchOpen] = useState(false)
 	const [myCards, setMyCards] = useState<ICard[]>([])
@@ -28,6 +29,7 @@ const App = () => {
 	const getCards = async (searchQuery: string) => {
 		setSearchCards([])
 		try {
+			setIsLoading(true)
 			const baseURL = 'https://api.pokemontcg.io/v2/cards?q=name:'
 			const _results = (await axios.get(baseURL + searchQuery))
 			if ((!Array.isArray(_results.data.data)) || (_results.data.data).length > 0) {
@@ -49,6 +51,9 @@ const App = () => {
 
 			setError(errorMessage)
 			
+		}
+		finally {
+			setIsLoading(false)
 		}
 		
 	}
@@ -94,13 +99,14 @@ const App = () => {
 					setSearchCards([])
 
 				}}>Close Search</button>
+				{isLoading ? <p>LOADING...</p> :
 				<SearchResults cards={ searchCards } error={error} onSubmit= { (card: ICard, reversePrice: boolean) => { 
 					if (whoseCards === 'mine')
 						setMyCards(cards => [...cards, {...card, price: reversePrice?card.tcgplayer?.prices?.reverseHolofoil?.market:card.price}]) 
 					else if (whoseCards === 'theirs')
 						setTheirCards(cards => [...cards, {...card, price: reversePrice?card.tcgplayer?.prices?.reverseHolofoil?.market:card.price}]) 
 
-				}} />
+				}} />}
 				
 			</div>: null)}
 		</div>
