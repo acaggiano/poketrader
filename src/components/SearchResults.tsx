@@ -37,7 +37,6 @@ const SearchResults = ({ cards , onSubmit, error }: SearchResultsProps) => {
                 )}
                 </div>
                 <Pagination
-                className='pagination-bar'
                 currentPage={currentPage}
                 totalCount={cards.length}
                 pageSize={PageSize}
