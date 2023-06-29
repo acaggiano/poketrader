@@ -6,7 +6,6 @@ import {
 } from 'react-query'
 
 import App from './components/App'
-import './App.css'
 
 const queryClient = new QueryClient()
 

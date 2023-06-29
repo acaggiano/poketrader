@@ -8,6 +8,12 @@ import CardList from './CardList'
 import SearchResults from './SearchResults'
 import { ICard } from 'interfaces/card'
 import getTotal from 'utils'
+import { styled } from 'styled-components'
+
+const AppContainer = styled.div`text-align: center;`
+const CardLists = styled.div`
+	display: flex;
+	justify-content: center;`
 
 
 const App = () => {
@@ -64,10 +70,10 @@ const App = () => {
 	const evaluation = useMemo(() => (myTotal * .95 <= theirTotal && theirTotal <= myTotal * 1.05) || (theirTotal * .95 <= myTotal && myTotal <= theirTotal * 1.05), [myTotal, theirTotal])
 
 	return (
-		<div className='App'>  
+		<AppContainer>  
 			<h1>PokeTrader</h1>
-			<div id='card-lists'>
-				<div id='my-cards' className='card-block'>
+			<CardLists>
+				<div id='my-cards'>
 					<h2>My Cards</h2>
 					<CardList cards={ myCards } />
 					<button onClick={() => { 
@@ -78,7 +84,7 @@ const App = () => {
 					}} disabled={searchOpen}>Add Cards</button>
 				</div>
 				<div>{evaluation ? 'Fair' : 'Unfair'}</div>
-				<div id='their-cards' className='card-block'>
+				<div id='their-cards'>
 					<h2>Their Cards</h2>
 					<CardList cards={ theirCards } />
 					<button onClick={() => {
@@ -88,7 +94,7 @@ const App = () => {
 						setSearchOpen(true)
 					}} disabled={searchOpen}>Add Cards</button>
 				</div>
-			</div>
+			</CardLists>
 			{(searchOpen ? 
 			<div id='search-modal'>
 				<SearchBar query={ searchInput } onChange={ handleSearchChange }/>
@@ -109,7 +115,7 @@ const App = () => {
 				}} />}
 				
 			</div>: null)}
-		</div>
+		</AppContainer>
 	)
 }
 
