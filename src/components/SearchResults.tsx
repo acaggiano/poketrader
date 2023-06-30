@@ -1,10 +1,10 @@
 import React, { useMemo, useState } from 'react'
-import CardDetails from './CardDetails'
+import CardDetails from 'components/CardDetails'
 import { ICard } from 'interfaces/card'
-import Pagination from './Pagination'
+import Pagination from 'components/Pagination'
 
 type SearchResultsProps = {
-    cards: ICard[],
+    cards: ICard[] | undefined,
     error: any,
     onSubmit: (card: ICard, reversePrice: boolean) => void
 }
@@ -13,13 +13,14 @@ let PageSize = 10
 
 const SearchResults = ({ cards , onSubmit, error }: SearchResultsProps) => {
 
-
     const [currentPage, setCurrentPage] = useState<number>(1)
+
+    console.log(cards)
 
     const currentTableData = useMemo(() => {
         const firstPageIndex = (currentPage - 1) * PageSize
         const lastPageIndex = firstPageIndex + PageSize
-        return cards.slice(firstPageIndex, lastPageIndex)
+        return cards !== undefined ? cards.slice(firstPageIndex, lastPageIndex) : []
       }, [currentPage, cards])
 
     if (currentTableData.length > 0) {
@@ -38,7 +39,7 @@ const SearchResults = ({ cards , onSubmit, error }: SearchResultsProps) => {
                 </div>
                 <Pagination
                 currentPage={currentPage}
-                totalCount={cards.length}
+                totalCount={cards!.length}
                 pageSize={PageSize}
                 onPageChange={page => setCurrentPage(page)}
                 />

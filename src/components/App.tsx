@@ -4,9 +4,9 @@ import { styled } from 'styled-components'
 
 import { ICard } from 'interfaces/card'
 
-import CardList from './CardList'
-import SearchModal from './SearchModal'
-import getTotal from 'utils'
+import CardList from 'components/CardList'
+import SearchModal from 'components/SearchModal'
+import getTotal from 'utils/getTotal'
 
 
 const AppContainer = styled.div`text-align: center;`
@@ -31,16 +31,14 @@ const App = () => {
 			<h1>PokeTrader</h1>
 			<CardLists>
 				<div id='my-cards'>
-					<h2>My Cards</h2>
-					<CardList cards={ myCards } />
+					<CardList cards={ myCards } title='My Cards' />
 					<button onClick={() => { 
 						setModalArgs({onAdd: (card) => setMyCards((cards) => [...cards, {...card}])})
 					}} disabled={modalArgs!==undefined}>Add Cards</button>
 				</div>
 				<div>{evaluation ? 'Fair' : 'Unfair'}</div>
 				<div id='their-cards'>
-					<h2>Their Cards</h2>
-					<CardList cards={ theirCards } />
+					<CardList cards={ theirCards } title='Their Cards'/>
 					<button onClick={() => { 
 						setModalArgs({onAdd: (card) => setTheirCards((cards) => [...cards, {...card}])})
 					}} disabled={modalArgs!==undefined}>Add Cards</button>
