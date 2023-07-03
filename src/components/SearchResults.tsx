@@ -15,8 +15,6 @@ const SearchResults = ({ cards , onSubmit, error }: SearchResultsProps) => {
 
     const [currentPage, setCurrentPage] = useState<number>(1)
 
-    console.log(cards)
-
     const currentTableData = useMemo(() => {
         const firstPageIndex = (currentPage - 1) * PageSize
         const lastPageIndex = firstPageIndex + PageSize
@@ -52,7 +50,7 @@ const SearchResults = ({ cards , onSubmit, error }: SearchResultsProps) => {
     else if (error) return <p>{error}</p>
 
        
-    else return null
+    else return <div>No Result Found</div>
 }
 
 export default SearchResults

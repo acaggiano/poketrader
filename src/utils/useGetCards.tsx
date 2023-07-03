@@ -12,7 +12,12 @@ export const useGetCards = (searchQuery: string) => {
         return results
     }
 
-    const query = useQuery(['getCards', searchQuery], () => _get(searchQuery), {onError: (err: AxiosError) => err})
+    const query = useQuery(['getCards', searchQuery], () => _get(searchQuery), {
+        onError: (err: AxiosError) => err,
+        enabled: !!searchQuery,
+        staleTime: Infinity,
+        cacheTime: Infinity
+    })
 
     return query
     
