@@ -9,7 +9,7 @@ type SearchResultsProps = {
     onSubmit: (card: ICard, reversePrice: boolean) => void
 }
 
-let PageSize = 10
+let PageSize = 7
 
 const SearchResults = ({ cards , onSubmit, error }: SearchResultsProps) => {
 

@@ -8,9 +8,7 @@ type Props = {
 function SearchBar({query, onChange}: Props) {
   
   return(
-    <div>
-      <input value={query} onChange={ onChange }></input>
-    </div>
+    <input value={query} onChange={ onChange }></input>
   )
 }
 

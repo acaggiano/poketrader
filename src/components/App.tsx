@@ -24,7 +24,7 @@ const App = () => {
 	const myTotal = useMemo(() => getTotal(myCards), [myCards])
 	const theirTotal = useMemo(() => getTotal(theirCards), [theirCards])
 
-	const evaluation = useMemo(() => (myTotal * .95 <= theirTotal && theirTotal <= myTotal * 1.05) || (theirTotal * .95 <= myTotal && myTotal <= theirTotal * 1.05), [myTotal, theirTotal])
+	const evaluation = useMemo(() => (myTotal * .90 <= theirTotal && theirTotal <= myTotal * 1.1) || (theirTotal * .90 <= myTotal && myTotal <= theirTotal * 1.10), [myTotal, theirTotal])
 
 	return (
 		<AppContainer>  
@@ -36,7 +36,7 @@ const App = () => {
 						setModalArgs({onAdd: (card) => setMyCards((cards) => [...cards, {...card}])})
 					}} disabled={modalArgs!==undefined}>Add Cards</button>
 				</div>
-				<div>{evaluation ? 'Fair' : 'Unfair'}</div>
+				<div>{evaluation ? 'Fair' + String.fromCodePoint(128077) : 'Unfair' + String.fromCodePoint(128078)}</div>
 				<div id='their-cards'>
 					<CardList cards={ theirCards } title='Their Cards'/>
 					<button onClick={() => { 

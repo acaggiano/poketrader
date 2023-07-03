@@ -5,7 +5,7 @@ import { useQuery } from 'react-query'
 export const useGetCards = (searchQuery: string) => {
 
     const _get = async (query: string) => {
-        const _results = (await axios.get(`https://api.pokemontcg.io/v2/cards?q=name:*${encodeURIComponent(query)}*`)).data.data
+        const _results = (await axios.get(`https://api.pokemontcg.io/v2/cards?q=name:"*${encodeURIComponent(query)}*"`)).data.data
 
         const results: ICard[] = _results.map((c: ICard) => ({...c, price: c.tcgplayer?.prices?.normal?.market || c.tcgplayer?.prices?.holofoil?.market }))
 
