@@ -8,7 +8,7 @@ type Props = {
 function SearchBar({query, onChange}: Props) {
   
   return(
-    <input value={query} onChange={ onChange }></input>
+    <input placeholder='Search Card Name' value={query} onChange={ onChange }></input>
   )
 }
 

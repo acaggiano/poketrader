@@ -38,8 +38,6 @@ display: inline-block;
 position: absolute;
 right: 0`
 
-
-
 type SearchModalProps = {
     onAdd: (card: ICard) => void
     onClose: () => void
@@ -49,8 +47,8 @@ export default function SearchModal({onAdd, onClose}: SearchModalProps) {
 
     const [searchInput, setSearchInput] = useState('')
     const debouncedQuery = useDebounce(searchInput)
-    const cards = useGetCards(debouncedQuery)
-   
+    const {data, status, error} = useGetCards(debouncedQuery)
+
   return (
     <SearchContainer>
         <SearchTools>
@@ -58,11 +56,11 @@ export default function SearchModal({onAdd, onClose}: SearchModalProps) {
                 <SearchBar query={ searchInput } onChange={ (e: React.ChangeEvent<HTMLInputElement>) => setSearchInput(e.target.value) } />   
                 <CloseButton onClick={() => { onClose() }}>X</CloseButton>
             </SearchBarWrapper>
-            {cards.isLoading ? <p>LOADING...</p> :
-            <SearchResults cards={ cards.data } error={cards.error?.message} onSubmit={ (card: ICard, reversePrice: boolean) => { 
+            {status === 'loading' ? <p>LOADING...</p> :
+            <SearchResults cards={ data } error={error} onSubmit={ (card: ICard, reversePrice: boolean) => { 
                 onAdd({...card, price: reversePrice?card.tcgplayer?.prices?.reverseHolofoil?.market:card.price}) 
             }} />}	
-        </SearchTools>		
+        </SearchTools>	
 	</SearchContainer>
   )
 }

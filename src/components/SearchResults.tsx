@@ -50,7 +50,9 @@ const SearchResults = ({ cards , onSubmit, error }: SearchResultsProps) => {
     else if (error) return <p>{error}</p>
 
        
-    else return <div>No Result Found</div>
+    else if (cards) return <div>No Result Found</div>
+
+    else return null
 }
 
 export default SearchResults
